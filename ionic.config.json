@@ -1,0 +1,7 @@
+{
+  "name": "autozone-itla",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
