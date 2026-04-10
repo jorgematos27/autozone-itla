@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Registro from './pages/Registro/Registro';
 import Activar from './pages/Activar/Activar';
 import Login from './pages/Login/Login';
+import Dashboard from './pages/Dashboard/Dashboard';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -53,6 +54,10 @@ const App: React.FC = () => (
   <Route exact path="/activar">
     <Activar />
   </Route>
+
+  <Route exact path="/dashboard">
+    <Dashboard />
+  </Route>  
 
 </IonRouterOutlet>
     </IonReactRouter>
