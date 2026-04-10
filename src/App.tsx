@@ -6,6 +6,7 @@ import Registro from './pages/Registro/Registro';
 import Activar from './pages/Activar/Activar';
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Perfil from './pages/Perfil/Perfil';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -58,6 +59,10 @@ const App: React.FC = () => (
   <Route exact path="/dashboard">
     <Dashboard />
   </Route>  
+
+  <Route exact path="/perfil">
+    <Perfil />
+  </Route>
 
 </IonRouterOutlet>
     </IonReactRouter>
