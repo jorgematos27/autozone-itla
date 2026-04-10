@@ -1,5 +1,5 @@
 import {
-  IonPage, IonContent, IonButton
+  IonPage, IonContent
 } from '@ionic/react';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -82,10 +82,10 @@ const Dashboard: React.FC = () => {
 
           {/* Header */}
           <header className="dash-header">
-            <div className="dash-saludo">
+            <button className="dash-saludo" onClick={() => history.push('/perfil')}>
               <span className="dash-label">Bienvenido</span>
               <h2 className="dash-nombre">{usuario.nombre || 'Usuario'} {usuario.apellido || ''}</h2>
-            </div>
+            </button>
             <div className="dash-acciones">
               <button
                 className="btn-tema"

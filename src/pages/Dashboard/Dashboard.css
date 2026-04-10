@@ -233,3 +233,11 @@ body:not([data-tema]) {
   letter-spacing: 0.05em;
   font-weight: 600;
 }
+
+.dash-saludo {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+}

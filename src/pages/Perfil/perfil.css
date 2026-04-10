@@ -1,0 +1,135 @@
+.perfil-content {
+  --background: var(--fondo);
+}
+
+.perfil-wrapper {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+  font-family: 'Georgia', serif;
+}
+
+.perfil-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Header */
+.perfil-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.btn-volver {
+  background: transparent;
+  border: 1px solid var(--borde);
+  color: var(--texto-secundario);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.perfil-titulo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--texto-primario);
+  margin: 0;
+}
+
+/* Foto */
+.perfil-foto-seccion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.perfil-foto-contenedor {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.perfil-foto {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--borde);
+  box-shadow: var(--sombra);
+}
+
+.perfil-foto-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-cambiar-foto {
+  background: var(--acento);
+  color: var(--acento-texto);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Mensajes */
+.perfil-mensaje {
+  text-align: center;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+.perfil-mensaje--ok {
+  color: #2ecc71;
+}
+
+/* Datos */
+.perfil-datos {
+  background: var(--fondo-card);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+}
+
+.dato-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--borde);
+}
+
+.dato-fila:last-child {
+  border-bottom: none;
+}
+
+.dato-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--texto-secundario);
+  font-weight: 600;
+}
+
+.dato-valor {
+  font-size: 0.95rem;
+  color: var(--texto-primario);
+  text-align: right;
+}
