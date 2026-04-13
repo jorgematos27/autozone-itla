@@ -1,0 +1,243 @@
+/* Variables por tema */
+body[data-tema="claro"] {
+  --fondo: #f2f2f2;
+  --fondo-card: #ffffff;
+  --texto-primario: #111111;
+  --texto-secundario: #555555;
+  --borde: #e0e0e0;
+  --sombra: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --acento: #1a1a2e;
+  --acento-texto: #ffffff;
+  --btn-tema-fondo: #1a1a2e;
+  --btn-tema-texto: #ffffff;
+  --tag-fondo: #1a1a2e;
+  --tag-texto: #ffffff;
+}
+
+body[data-tema="oscuro"],
+body:not([data-tema]) {
+  --fondo: #0d0d0d;
+  --fondo-card: #1a1a1a;
+  --texto-primario: #f0f0f0;
+  --texto-secundario: #888888;
+  --borde: #2a2a2a;
+  --sombra: 0 2px 12px rgba(0, 0, 0, 0.4);
+  --acento: #e63946;
+  --acento-texto: #ffffff;
+  --btn-tema-fondo: #f0f0f0;
+  --btn-tema-texto: #111111;
+  --tag-fondo: #e63946;
+  --tag-texto: #ffffff;
+}
+
+.dash-content {
+  --background: var(--fondo);
+}
+
+.dash-wrapper {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+  font-family: 'Georgia', serif;
+}
+
+/* Header */
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.dash-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--texto-secundario);
+}
+
+.dash-nombre {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--texto-primario);
+  margin: 2px 0 0;
+}
+
+.dash-acciones {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-tema {
+  background: var(--btn-tema-fondo);
+  color: var(--btn-tema-texto);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+}
+
+.btn-salir {
+  background: transparent;
+  color: var(--texto-secundario);
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+/* Slider */
+.dash-slider {
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: var(--sombra);
+}
+
+.slide-inner {
+  padding: 36px 28px 32px;
+  transition: background-color 0.6s ease;
+  position: relative;
+  min-height: 200px;
+}
+
+.slide-numero {
+  font-size: 4rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.08);
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  line-height: 1;
+  font-family: 'Georgia', serif;
+}
+
+.slide-titulo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 12px;
+  line-height: 1.2;
+  position: relative;
+}
+
+.slide-subtitulo {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 24px;
+  line-height: 1.5;
+  position: relative;
+}
+
+.slide-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dot.activo {
+  background: #ffffff;
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* Motivacion */
+.dash-motivacion {
+  background: var(--fondo-card);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  box-shadow: var(--sombra);
+}
+
+.motiv-tag {
+  display: inline-block;
+  background: var(--tag-fondo);
+  color: var(--tag-texto);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.motiv-texto {
+  color: var(--texto-primario);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Accesos */
+.seccion-titulo {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--texto-secundario);
+  margin: 0 0 14px;
+  font-weight: 600;
+}
+
+.accesos-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.acceso-card {
+  background: var(--fondo-card);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: var(--sombra);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.acceso-card:active {
+  transform: scale(0.96);
+}
+
+.acceso-icono {
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--acento);
+  font-family: 'Georgia', serif;
+}
+
+.acceso-label {
+  font-size: 0.65rem;
+  color: var(--texto-secundario);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.dash-saludo {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+}

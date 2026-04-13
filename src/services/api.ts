@@ -1,6 +1,6 @@
 const BASE_URL = "https://taller-itla.ia3x.com/api";
 
-// Guarda y obtiene el token
+
 const getToken = () => localStorage.getItem("token");
 
 // Petición GET autenticada
@@ -11,7 +11,7 @@ export const get = async (endpoint) => {
   return res.json();
 };
 
-// Petición POST con datax (form-encoded)
+
 export const post = async (endpoint, data, requiresAuth = true) => {
   const headers = { "Content-Type": "application/x-www-form-urlencoded" };
   if (requiresAuth) headers["Authorization"] = `Bearer ${getToken()}`;
@@ -26,7 +26,7 @@ export const post = async (endpoint, data, requiresAuth = true) => {
   return res.json();
 };
 
-// Petición POST con multipart (fotos)
+
 export const postForm = async (endpoint, formData) => {
   const res = await fetch(`${BASE_URL}${endpoint}`, {
     method: "POST",
