@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Perfil from './pages/Perfil/Perfil';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
+import Vehiculos from './pages/Vehiculos/Vehiculos';
 
 
 /* Basic CSS for apps built with Ionic */
@@ -63,6 +64,10 @@ const App: React.FC = () => (
   <Route exact path="/perfil">
     <Perfil />
   </Route>
+
+  <Route exact path="/vehiculos">
+  <Vehiculos />
+</Route>
 
 </IonRouterOutlet>
     </IonReactRouter>
