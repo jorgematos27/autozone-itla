@@ -18,6 +18,8 @@ export const post = async (endpoint, data, requiresAuth = true) => {
 
   const body = new URLSearchParams({ datax: JSON.stringify(data) });
 
+  console.log('POST', endpoint, JSON.stringify(data)); // <-- agrega esta linea
+
   const res = await fetch(`${BASE_URL}${endpoint}`, {
     method: "POST",
     headers,
