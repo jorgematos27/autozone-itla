@@ -14,18 +14,60 @@ import {
 import { useEffect, useState } from 'react';
 import { get, post } from '../../services/api';
 
+interface Vehiculo {
+  id: number;
+  marca: string;
+  modelo: string;
+  anio: number;
+}
+
+interface RegistroCombustible {
+  id: number;
+  tipo: string;
+  cantidad: number;
+  unidad: string;
+  monto: number;
+}
+
 const Combustible = () => {
-  const [vehiculoId, setVehiculoId] = useState('');
-  const [tipo, setTipo] = useState('combustible');
-  const [cantidad, setCantidad] = useState('');
-  const [unidad, setUnidad] = useState('galones');
-  const [monto, setMonto] = useState('');
-  const [registros, setRegistros] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [mensaje, setMensaje] = useState('');
+  const [vehiculoId, setVehiculoId] = useState<string>('');
+  const [vehiculos, setVehiculos] = useState<Vehiculo[]>([]);
+  const [tipo, setTipo] = useState<string>('combustible');
+  const [cantidad, setCantidad] = useState<string>('');
+  const [unidad, setUnidad] = useState<string>('galones');
+  const [monto, setMonto] = useState<string>('');
+  const [registros, setRegistros] = useState<RegistroCombustible[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [loadingVehiculos, setLoadingVehiculos] = useState<boolean>(false);
+  const [mensaje, setMensaje] = useState<string>('');
+
+  const cargarVehiculos = async () => {
+    setLoadingVehiculos(true);
+    setMensaje('');
+
+    try {
+      const res = await get('/vehiculos');
+
+      if (res.success) {
+        setVehiculos(res.data || []);
+      } else {
+        setVehiculos([]);
+        setMensaje(res.message || 'No se pudieron cargar los vehículos');
+      }
+    } catch (error) {
+      setVehiculos([]);
+      setMensaje('No se pudo conectar con el servidor');
+    } finally {
+      setLoadingVehiculos(false);
+    }
+  };
 
   const cargarRegistros = async () => {
-    if (!vehiculoId.trim()) return;
+    if (!vehiculoId) {
+      setRegistros([]);
+      setMensaje('Selecciona un vehículo');
+      return;
+    }
 
     setLoading(true);
     setMensaje('');
@@ -36,9 +78,11 @@ const Combustible = () => {
       if (res.success) {
         setRegistros(res.data || []);
       } else {
+        setRegistros([]);
         setMensaje(res.message || 'No se pudieron cargar los registros');
       }
     } catch (error) {
+      setRegistros([]);
       setMensaje('No se pudo conectar con el servidor');
     } finally {
       setLoading(false);
@@ -55,19 +99,21 @@ const Combustible = () => {
     setMensaje('');
 
     try {
-      const res = await post('/combustibles', {
+      const payload = {
         vehiculo_id: Number(vehiculoId),
         tipo,
         cantidad: Number(cantidad),
         unidad,
         monto: Number(monto)
-      });
+      };
+
+      const res = await post('/combustibles', payload);
 
       if (res.success) {
         setMensaje('Registro guardado correctamente');
         setCantidad('');
         setMonto('');
-        cargarRegistros();
+        await cargarRegistros();
       } else {
         setMensaje(res.message || 'No se pudo guardar el registro');
       }
@@ -79,8 +125,14 @@ const Combustible = () => {
   };
 
   useEffect(() => {
+    cargarVehiculos();
+  }, []);
+
+  useEffect(() => {
     if (vehiculoId) {
       cargarRegistros();
+    } else {
+      setRegistros([]);
     }
   }, [vehiculoId]);
 
@@ -91,13 +143,19 @@ const Combustible = () => {
         <p>Registra cargas de combustible o cambios de aceite</p>
 
         <IonItem>
-          <IonInput
-            label="Vehículo ID"
+          <IonSelect
+            label="Vehículo"
             labelPlacement="stacked"
-            type="number"
             value={vehiculoId}
-            onIonInput={(e) => setVehiculoId(e.detail.value || '')}
-          />
+            placeholder={loadingVehiculos ? 'Cargando vehículos...' : 'Selecciona un vehículo'}
+            onIonChange={(e) => setVehiculoId(e.detail.value)}
+          >
+            {vehiculos.map((vehiculo) => (
+              <IonSelectOption key={vehiculo.id} value={String(vehiculo.id)}>
+                {vehiculo.marca} {vehiculo.modelo} {vehiculo.anio}
+              </IonSelectOption>
+            ))}
+          </IonSelect>
         </IonItem>
 
         <IonItem>
@@ -145,12 +203,28 @@ const Combustible = () => {
           />
         </IonItem>
 
-        <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <IonButton expand="block" onClick={guardarRegistro} disabled={loading}>
+        <div
+          style={{
+            marginTop: '16px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px'
+          }}
+        >
+          <IonButton
+            expand="block"
+            onClick={guardarRegistro}
+            disabled={loading || loadingVehiculos}
+          >
             {loading ? <IonSpinner name="crescent" /> : 'Guardar registro'}
           </IonButton>
 
-          <IonButton expand="block" fill="outline" onClick={cargarRegistros}>
+          <IonButton
+            expand="block"
+            fill="outline"
+            onClick={cargarRegistros}
+            disabled={!vehiculoId || loading}
+          >
             Cargar registros
           </IonButton>
         </div>
@@ -162,8 +236,8 @@ const Combustible = () => {
         )}
 
         <IonList>
-          {registros.map((item, index) => (
-            <IonItem key={item.id || index}>
+          {registros.map((item) => (
+            <IonItem key={item.id}>
               <IonLabel>
                 <h2>{item.tipo}</h2>
                 <p>
