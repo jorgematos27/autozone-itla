@@ -1,129 +1,110 @@
-import {
-  IonPage, IonContent, IonItem, IonLabel,
-  IonInput, IonButton, IonText, IonSpinner
-} from '@ionic/react';
+import { IonPage, IonContent, IonSpinner } from '@ionic/react';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { LogIn, KeyRound, Hash } from 'lucide-react';
 import { post } from '../../services/api';
 import './Login.css';
 
 const Login: React.FC = () => {
-  const [matricula, setMatricula] = useState('');
+  const [matricula, setMatricula]   = useState('');
   const [contrasena, setContrasena] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [loading, setLoading]       = useState(false);
+  const [error, setError]           = useState('');
   const history = useHistory();
 
   const handleLogin = async () => {
-    if (!matricula || !contrasena) {
-      setError('Completa todos los campos');
-      return;
-    }
-
-    setLoading(true);
-    setError('');
-
+    if (!matricula || !contrasena) { setError('Completa todos los campos'); return; }
+    setLoading(true); setError('');
     try {
       const res = await post('/auth/login', { matricula, contrasena }, false);
-
       if (res.success) {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('refreshToken', res.data.refreshToken);
         localStorage.setItem('usuario', JSON.stringify({
-          id: res.data.id,
-          nombre: res.data.nombre,
-          apellido: res.data.apellido,
-          correo: res.data.correo,
+          id: res.data.id, nombre: res.data.nombre,
+          apellido: res.data.apellido, correo: res.data.correo,
           fotoUrl: res.data.fotoUrl
         }));
         history.push('/dashboard');
       } else {
         setError(res.message || 'Credenciales incorrectas');
       }
-    } catch (e) {
-      setError('No se pudo conectar con el servidor');
-    } finally {
-      setLoading(false);
-    }
+    } catch { setError('No se pudo conectar con el servidor'); }
+    finally { setLoading(false); }
   };
 
   const handleOlvidar = async () => {
-    if (!matricula) {
-      setError('Ingresa tu matrícula primero');
-      return;
-    }
+    if (!matricula) { setError('Ingresa tu matricula primero'); return; }
     try {
       const res = await post('/auth/olvidar', { matricula }, false);
-      if (res.success) {
-        setError('');
-        alert('Se envió una contraseña temporal a tu correo');
-      } else {
-        setError(res.message || 'Error al recuperar contraseña');
-      }
-    } catch (e) {
-      setError('No se pudo conectar con el servidor');
-    }
+      if (res.success) { setError(''); alert('Se envio una contrasena temporal a tu correo'); }
+      else setError(res.message || 'Error al recuperar contrasena');
+    } catch { setError('No se pudo conectar con el servidor'); }
   };
 
   return (
     <IonPage>
-      <IonContent className="login-content">
-        <div className="login-container">
-          <div className="login-header">
-            <h1>🚗 AutoZone</h1>
-            <p>Inicia sesión para continuar</p>
+      <IonContent className="az-content">
+        <div className="az-auth-wrapper">
+
+          <div className="az-brand">
+            <div className="az-brand-mark">AZ</div>
+            <div>
+              <h1 className="az-brand-nombre">AutoZone</h1>
+              <p className="az-brand-sub">ITLA — Gestion Vehicular</p>
+            </div>
           </div>
 
-          <div className="login-form">
-            <IonItem>
-              <IonLabel position="floating">Matrícula ITLA</IonLabel>
-              <IonInput
-                value={matricula}
-                onIonChange={e => setMatricula(e.detail.value!)}
-                type="text"
-              />
-            </IonItem>
+          <div className="az-card">
+            <h2 className="az-card-titulo">Iniciar sesion</h2>
 
-            <IonItem>
-              <IonLabel position="floating">Contraseña</IonLabel>
-              <IonInput
-                type="password"
-                value={contrasena}
-                onIonChange={e => setContrasena(e.detail.value!)}
-              />
-            </IonItem>
+            <div className="az-field">
+              <label className="az-label">Matricula ITLA</label>
+              <div className="az-input-wrap">
+                <Hash size={15} className="az-input-icon" />
+                <input
+                  className="az-input"
+                  type="text"
+                  placeholder="2020-1234"
+                  value={matricula}
+                  onChange={e => setMatricula(e.target.value)}
+                />
+              </div>
+            </div>
 
-            {error && (
-              <IonText color="danger">
-                <p className="error-text">{error}</p>
-              </IonText>
-            )}
+            <div className="az-field">
+              <label className="az-label">Contrasena</label>
+              <div className="az-input-wrap">
+                <KeyRound size={15} className="az-input-icon" />
+                <input
+                  className="az-input"
+                  type="password"
+                  placeholder="••••••"
+                  value={contrasena}
+                  onChange={e => setContrasena(e.target.value)}
+                />
+              </div>
+            </div>
 
-            <IonButton
-              expand="block"
-              className="login-btn"
-              onClick={handleLogin}
-              disabled={loading}
-            >
-              {loading ? <IonSpinner name="crescent" /> : 'Iniciar Sesión'}
-            </IonButton>
+            {error && <p className="az-error">{error}</p>}
 
-            <IonButton
-              expand="block"
-              fill="clear"
-              onClick={handleOlvidar}
-            >
-              ¿Olvidaste tu contraseña?
-            </IonButton>
+            <button className="az-btn-primary" onClick={handleLogin} disabled={loading}>
+              {loading
+                ? <IonSpinner name="crescent" style={{ width: 18, height: 18 }} />
+                : <><LogIn size={16} /> Iniciar sesion</>
+              }
+            </button>
 
-            <IonButton
-              expand="block"
-              fill="clear"
-              onClick={() => history.push('/registro')}
-            >
-              ¿No tienes cuenta? Regístrate
-            </IonButton>
+            <div className="az-divider" />
+
+            <button className="az-btn-ghost" onClick={handleOlvidar}>
+              Olvide mi contrasena
+            </button>
+            <button className="az-btn-ghost" onClick={() => history.push('/registro')}>
+              No tengo cuenta — Registrarme
+            </button>
           </div>
+
         </div>
       </IonContent>
     </IonPage>
