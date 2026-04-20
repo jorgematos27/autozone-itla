@@ -1,25 +1,28 @@
-import {
-  IonPage, IonContent
-} from '@ionic/react';
+import { IonPage, IonContent } from '@ionic/react';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import {
+  Car, Wrench, Fuel, CircleDot,
+  Wallet, MessageSquare, Newspaper,
+  BookOpen, Sun, Moon, LogOut, ChevronRight
+} from 'lucide-react';
 import './Dashboard.css';
 
 const slides = [
   {
     titulo: 'Conoce tu vehiculo',
     subtitulo: 'Cada kilometro cuenta. Registra y controla tu historial completo.',
-    bg: '#1a1a2e'
+    bg: '#0F172A'
   },
   {
     titulo: 'Mantenimiento inteligente',
     subtitulo: 'Un motor bien cuidado es una inversion que siempre rinde.',
-    bg: '#0f3460'
+    bg: '#1E3A5F'
   },
   {
     titulo: 'Controla tus gastos',
     subtitulo: 'Saber cuanto gastas es el primer paso para gastar menos.',
-    bg: '#16213e'
+    bg: '#1E293B'
   }
 ];
 
@@ -27,42 +30,32 @@ const motivaciones = [
   'Revisa el aceite de tu motor cada 5,000 kilometros.',
   'Mantener la presion correcta en las gomas ahorra combustible.',
   'Un freno revisado a tiempo puede salvar una vida.',
-  'La bateria de tu vehiculo dura mas si evitas arranques cortos frecuentes.',
+  'La bateria dura mas si evitas arranques cortos frecuentes.',
   'Limpiar el filtro de aire mejora el rendimiento del motor.'
 ];
 
 const accesos = [
-  { label: 'Mis Vehiculos', ruta: '/vehiculos', icono: 'V' },
-  { label: 'Mantenimientos', ruta: '/mantenimientos', icono: 'M' },
-  { label: 'Combustible', ruta: '/combustible', icono: 'C' },
-  { label: 'Gomas', ruta: '/gomas', icono: 'G' },
-  { label: 'Gastos', ruta: '/gastos', icono: '$' },
-  { label: 'Foro', ruta: '/foro', icono: 'F' },
-  { label: 'Noticias', ruta: '/noticias', icono: 'N' },
-  { label: 'Catalogo', ruta: '/catalogo', icono: 'K' },
+  { label: 'Mis Vehiculos',   ruta: '/vehiculos',      Icono: Car },
+  { label: 'Mantenimientos',  ruta: '/mantenimientos', Icono: Wrench },
+  { label: 'Combustible',     ruta: '/combustible',    Icono: Fuel },
+  { label: 'Gomas',           ruta: '/gomas',          Icono: CircleDot },
+  { label: 'Gastos',          ruta: '/gastos',         Icono: Wallet },
+  { label: 'Foro',            ruta: '/foro',           Icono: MessageSquare },
+  { label: 'Noticias',        ruta: '/noticias',       Icono: Newspaper },
+  { label: 'Catalogo',        ruta: '/catalogo',       Icono: BookOpen },
 ];
 
 const Dashboard: React.FC = () => {
   const [slideActual, setSlideActual] = useState(0);
-  const [motivacion, setMotivacion] = useState(0);
-  const [oscuro, setOscuro] = useState(() => {
-    return localStorage.getItem('tema') === 'oscuro';
-  });
+  const [motivacion, setMotivacion]   = useState(0);
+  const [oscuro, setOscuro] = useState(() => localStorage.getItem('tema') === 'oscuro');
   const history = useHistory();
-
   const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
 
   useEffect(() => {
-    const intervaloSlide = setInterval(() => {
-      setSlideActual(prev => (prev + 1) % slides.length);
-    }, 4000);
-    const intervaloMotiv = setInterval(() => {
-      setMotivacion(prev => (prev + 1) % motivaciones.length);
-    }, 5000);
-    return () => {
-      clearInterval(intervaloSlide);
-      clearInterval(intervaloMotiv);
-    };
+    const s = setInterval(() => setSlideActual(p => (p + 1) % slides.length), 4000);
+    const m = setInterval(() => setMotivacion(p => (p + 1) % motivaciones.length), 5000);
+    return () => { clearInterval(s); clearInterval(m); };
   }, []);
 
   useEffect(() => {
@@ -70,50 +63,48 @@ const Dashboard: React.FC = () => {
     localStorage.setItem('tema', oscuro ? 'oscuro' : 'claro');
   }, [oscuro]);
 
-  const handleLogout = () => {
-    localStorage.clear();
-    history.push('/login');
-  };
+  const handleLogout = () => { localStorage.clear(); history.push('/login'); };
 
   return (
     <IonPage>
-      <IonContent className="dash-content">
+      <IonContent className="az-content">
         <div className="dash-wrapper">
 
           {/* Header */}
           <header className="dash-header">
-            <button className="dash-saludo" onClick={() => history.push('/perfil')}>
-              <span className="dash-label">Bienvenido</span>
-              <h2 className="dash-nombre">{usuario.nombre || 'Usuario'} {usuario.apellido || ''}</h2>
+            <button className="dash-perfil-btn" onClick={() => history.push('/perfil')}>
+              <div className="dash-avatar">
+                {usuario.nombre?.[0]}{usuario.apellido?.[0]}
+              </div>
+              <div className="dash-saludo-texto">
+                <span className="dash-saludo-sub">Bienvenido</span>
+                <span className="dash-saludo-nombre">
+                  {usuario.nombre || 'Usuario'} {usuario.apellido || ''}
+                </span>
+              </div>
+              <ChevronRight size={16} className="dash-chevron" />
             </button>
-            <div className="dash-acciones">
-              <button
-                className="btn-tema"
-                onClick={() => setOscuro(!oscuro)}
-                title="Cambiar tema"
-              >
-                {oscuro ? 'Claro' : 'Oscuro'}
+            <div className="dash-header-acciones">
+              <button className="dash-icon-btn" onClick={() => setOscuro(!oscuro)} title="Cambiar tema">
+                {oscuro ? <Sun size={18} /> : <Moon size={18} />}
               </button>
-              <button className="btn-salir" onClick={handleLogout}>
-                Salir
+              <button className="dash-icon-btn dash-icon-btn--salir" onClick={handleLogout} title="Salir">
+                <LogOut size={18} />
               </button>
             </div>
           </header>
 
           {/* Slider */}
           <section className="dash-slider">
-            <div
-              className="slide-inner"
-              style={{ backgroundColor: slides[slideActual].bg }}
-            >
-              <div className="slide-numero">{String(slideActual + 1).padStart(2, '0')}</div>
+            <div className="slide-inner" style={{ backgroundColor: slides[slideActual].bg }}>
+              <span className="slide-index">{String(slideActual + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}</span>
               <h1 className="slide-titulo">{slides[slideActual].titulo}</h1>
               <p className="slide-subtitulo">{slides[slideActual].subtitulo}</p>
               <div className="slide-dots">
                 {slides.map((_, i) => (
-                  <span
+                  <button
                     key={i}
-                    className={`dot ${i === slideActual ? 'activo' : ''}`}
+                    className={`dot ${i === slideActual ? 'dot--activo' : ''}`}
                     onClick={() => setSlideActual(i)}
                   />
                 ))}
@@ -121,24 +112,22 @@ const Dashboard: React.FC = () => {
             </div>
           </section>
 
-          {/* Motivacion */}
-          <section className="dash-motivacion">
-            <span className="motiv-tag">Consejo del dia</span>
-            <p className="motiv-texto">{motivaciones[motivacion]}</p>
+          {/* Consejo */}
+          <section className="dash-consejo">
+            <span className="consejo-tag">Consejo del dia</span>
+            <p className="consejo-texto">{motivaciones[motivacion]}</p>
           </section>
 
-          {/* Accesos rapidos */}
+          {/* Accesos */}
           <section className="dash-accesos">
-            <h3 className="seccion-titulo">Accesos rapidos</h3>
+            <p className="dash-seccion-label">Accesos rapidos</p>
             <div className="accesos-grid">
-              {accesos.map((a) => (
-                <button
-                  key={a.ruta}
-                  className="acceso-card"
-                  onClick={() => history.push(a.ruta)}
-                >
-                  <span className="acceso-icono">{a.icono}</span>
-                  <span className="acceso-label">{a.label}</span>
+              {accesos.map(({ label, ruta, Icono }) => (
+                <button key={ruta} className="acceso-card" onClick={() => history.push(ruta)}>
+                  <div className="acceso-icono-wrap">
+                    <Icono size={20} />
+                  </div>
+                  <span className="acceso-label">{label}</span>
                 </button>
               ))}
             </div>

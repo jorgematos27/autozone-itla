@@ -1,58 +1,177 @@
-.login-content {
-  --background: #f4f5f8;
+.az-content {
+  --background: var(--fondo);
 }
 
-.login-container {
+.az-auth-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-height: 100vh;
-  padding: 24px;
+  padding: 32px 20px;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
-.login-header {
-  text-align: center;
-  margin-bottom: 32px;
+/* Brand */
+.az-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 40px;
 }
 
-.login-header h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a1a2e;
-}
-
-.login-header p {
-  color: #666;
-  font-size: 0.95rem;
-}
-
-.login-form {
-  background: white;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-}
-
-.login-btn {
-  margin-top: 20px;
-}
-
-.error-text {
+.az-brand-mark {
+  width: 44px;
+  height: 44px;
+  background: var(--primario);
+  color: var(--primario-texto);
   font-size: 0.85rem;
-  margin: 8px 0 0 16px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
 }
 
-ion-item {
-  --background: #ffffff;
-  --color: #1a1a2e;
-  --border-radius: 8px;
-  margin-bottom: 12px;
+.az-brand-nombre {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--texto-primario);
+  margin: 0;
+  line-height: 1;
 }
 
-ion-label {
-  --color: #666 !important;
+.az-brand-sub {
+  font-size: 0.72rem;
+  color: var(--texto-secundario);
+  margin: 3px 0 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
-ion-input {
-  --color: #1a1a2e !important;
+/* Card */
+.az-card {
+  background: var(--fondo-card);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 28px 24px;
+}
+
+.az-card-titulo {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--texto-primario);
+  margin: 0 0 24px;
+}
+
+/* Fields */
+.az-field {
+  margin-bottom: 16px;
+}
+
+.az-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--texto-secundario);
+  margin-bottom: 6px;
+}
+
+.az-input-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--fondo-input);
+  border: 1px solid var(--borde);
+  border-radius: 4px;
+  padding: 0 12px;
+  gap: 10px;
+  transition: border-color 0.15s;
+}
+
+.az-input-wrap:focus-within {
+  border-color: var(--primario);
+}
+
+.az-input-icon {
+  color: var(--texto-secundario);
+  flex-shrink: 0;
+}
+
+.az-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 12px 0;
+  font-size: 0.9rem;
+  color: var(--texto-primario);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.az-input::placeholder {
+  color: var(--texto-secundario);
+  opacity: 0.6;
+}
+
+/* Error */
+.az-error {
+  font-size: 0.8rem;
+  color: var(--error);
+  margin: -4px 0 12px;
+  padding: 8px 12px;
+  background: color-mix(in srgb, var(--error) 10%, transparent);
+  border-left: 3px solid var(--error);
+  border-radius: 0 4px 4px 0;
+}
+
+/* Botones */
+.az-btn-primary {
+  width: 100%;
+  background: var(--primario);
+  color: var(--primario-texto);
+  border: none;
+  border-radius: 4px;
+  padding: 13px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+  transition: opacity 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.az-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.az-divider {
+  height: 1px;
+  background: var(--borde);
+  margin: 20px 0;
+}
+
+.az-btn-ghost {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--texto-secundario);
+  font-size: 0.85rem;
+  padding: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+  transition: color 0.15s;
+  margin-bottom: 4px;
+}
+
+.az-btn-ghost:hover {
+  color: var(--primario);
 }
