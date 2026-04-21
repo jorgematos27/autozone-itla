@@ -12,7 +12,7 @@ import {
 } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import { get, post } from '../../services/api';
-
+import './Gomas.css';
 interface Vehiculo {
   id: number;
   marca: string;

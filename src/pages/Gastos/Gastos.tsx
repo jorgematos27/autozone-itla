@@ -15,6 +15,7 @@ import {
 } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import { get, post } from '../../services/api';
+import './Gastos.css';
 
 interface Vehiculo {
   id: number;

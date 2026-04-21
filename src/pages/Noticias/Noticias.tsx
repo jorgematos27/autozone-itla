@@ -14,7 +14,7 @@ import {
 } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import { get } from '../../services/api';
-
+import './Noticias.css';
 
 interface Noticia {
   id: number;
